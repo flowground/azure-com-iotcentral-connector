@@ -1,0 +1,125 @@
+{
+    "type": "object",
+    "properties": {
+        "subscriptionId": {
+            "required": true,
+            "type": "string"
+        },
+        "resourceGroupName": {
+            "required": true,
+            "type": "string"
+        },
+        "resourceName": {
+            "required": true,
+            "type": "string"
+        },
+        "requestBody": {
+            "allOf": [
+                {
+                    "description": "The common properties of an ARM resource.",
+                    "properties": {
+                        "id": {
+                            "description": "The ARM resource identifier.",
+                            "readOnly": true,
+                            "type": "string"
+                        },
+                        "location": {
+                            "description": "The resource location.",
+                            "type": "string",
+                            "x-ms-mutability": [
+                                "create",
+                                "read"
+                            ]
+                        },
+                        "name": {
+                            "description": "The ARM resource name.",
+                            "pattern": "^(?![0-9]+$)(?!-)[a-zA-Z0-9-]{2,99}[a-zA-Z0-9]$",
+                            "readOnly": true,
+                            "type": "string",
+                            "x-comment": "pattern must match #/parameters/resourceName"
+                        },
+                        "tags": {
+                            "additionalProperties": {
+                                "type": "string"
+                            },
+                            "description": "The resource tags.",
+                            "type": "object"
+                        },
+                        "type": {
+                            "description": "The resource type.",
+                            "readOnly": true,
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "location"
+                    ],
+                    "x-ms-azure-resource": true,
+                    "type": "object"
+                }
+            ],
+            "description": "The IoT Central application.",
+            "properties": {
+                "properties": {
+                    "description": "The common properties of an IoT Central application.",
+                    "x-ms-client-flatten": true,
+                    "properties": {
+                        "applicationId": {
+                            "description": "The ID of the application.",
+                            "readOnly": true,
+                            "type": "string"
+                        },
+                        "displayName": {
+                            "description": "The display name of the application.",
+                            "pattern": "^.{1,200}$",
+                            "type": "string"
+                        },
+                        "subdomain": {
+                            "description": "The subdomain of the application.",
+                            "pattern": "^[a-z0-9-]{1,63}$",
+                            "type": "string"
+                        },
+                        "template": {
+                            "description": "The ID of the application template, which is a blueprint that defines the characteristics and behaviors of an application. Optional; if not specified, defaults to a blank blueprint and allows the application to be defined from scratch.",
+                            "type": "string",
+                            "x-ms-mutability": [
+                                "create",
+                                "read"
+                            ]
+                        }
+                    },
+                    "type": "object"
+                },
+                "sku": {
+                    "description": "A valid instance SKU.",
+                    "properties": {
+                        "name": {
+                            "description": "The name of the SKU.",
+                            "enum": [
+                                "F1",
+                                "S1"
+                            ],
+                            "type": "string",
+                            "x-ms-enum": {
+                                "modelAsString": true,
+                                "name": "AppSku"
+                            }
+                        }
+                    },
+                    "required": [
+                        "name"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "sku"
+            ],
+            "type": "object"
+        },
+        "api_version": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}
